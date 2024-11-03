@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, TextInput, StyleSheet, Image, Switch, TouchableOpacity } from 'react-native';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'; // Import MaterialIcons
 
 const SignupScreen = ({ navigation }) => {
   const [isDarkMode, setIsDarkMode] = React.useState(false);
@@ -24,15 +25,30 @@ const SignupScreen = ({ navigation }) => {
 
       <Image source={require('../assets/logo.png')} style={styles.logo} />
       <Text style={[styles.title, isDarkMode ? styles.glowText : {}]}>Sign Up</Text>
+      
+      {/* Input Fields */}
       <TextInput placeholder="Name" style={styles.input} />
       <TextInput placeholder="Email" style={styles.input} />
       <TextInput placeholder="Password" secureTextEntry style={styles.input} />
+      
+      {/* Sign Up Button */}
       <TouchableOpacity 
         style={styles.signupButton}
-        onPress={() => navigation.navigate('User Profile')} // Navigate to HomeScreen
+        onPress={() => navigation.navigate('User Profile')}
       >
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
+
+      {/* Social Login Buttons (Icon-Only) */}
+      <View style={styles.socialContainer}>
+        <TouchableOpacity style={styles.iconButton}>
+          <MaterialIcons name="email" size={30} color="#DB4437" />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.iconButton}>
+          <MaterialIcons name="facebook" size={30} color="#4267B2" />
+        </TouchableOpacity>
+      </View>
+
       <Text style={styles.linkText} onPress={() => navigation.goBack()}>
         Already have an account? Log In
       </Text>
@@ -62,13 +78,13 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginBottom: 20,
     textAlign: 'center',
-    color: '#000', // Default color for light mode
+    color: '#000',
   },
   glowText: {
-    color: '#fff', // White font color for dark mode
-    textShadowColor: '#44ffb1', // Glow color
+    color: '#fff',
+    textShadowColor: '#44ffb1',
     textShadowOffset: { width: 0, height: 0 },
-    textShadowRadius: 10, // Glow effect intensity
+    textShadowRadius: 10,
   },
   input: {
     borderWidth: 1,
@@ -117,6 +133,18 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     fontSize: 18,
+  },
+  socialContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginVertical: 10,
+  },
+  iconButton: {
+    marginHorizontal: 10,
+    padding: 10,
+    borderRadius: 50,
+    backgroundColor: '#f2f2f2',
+    alignItems: 'center',
   },
 });
 

@@ -1,5 +1,7 @@
 import React from 'react';
 import { View, Text, TextInput, StyleSheet, Image, Switch, TouchableOpacity } from 'react-native';
+// Replace with your icon imports, e.g., from react-native-vector-icons
+import { MaterialIcons } from '@expo/vector-icons';
 
 const LoginScreen = ({ navigation }) => {
   const [isDarkMode, setIsDarkMode] = React.useState(false);
@@ -28,20 +30,36 @@ const LoginScreen = ({ navigation }) => {
         <TextInput placeholder="Email" style={styles.input} />
         <TextInput placeholder="Password" secureTextEntry style={styles.input} />
       </View>
+      
+      <Text style={styles.linkText} onPress={() => navigation.navigate('Password Recovery')}>
+        Forgot Password?
+      </Text>
+
       <TouchableOpacity  
         style={[styles.loginButton]}
         onPress={() => navigation.navigate('User Profile')} // Navigate to HomeScreen
       >
         <Text style={styles.buttonText}>Log In</Text>
       </TouchableOpacity>
+
+      <Text style={styles.orText}>Or log in with</Text>
       
+      {/* Social Login Buttons (Icon-Only) */}
+      <View style={styles.socialContainer}>
+        <TouchableOpacity style={styles.iconButton}>
+          <MaterialIcons name="email" size={30} color="#DB4437" />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.iconButton}>
+          <MaterialIcons name="facebook" size={30} color="#4267B2" />
+        </TouchableOpacity>
+      </View>
+
       <Text style={styles.linkText} onPress={() => navigation.navigate('Sign Up')}>
         Don't have an account? Sign Up
       </Text>
     </View>
   );
 };
-
 
 const styles = StyleSheet.create({
     container: {
@@ -89,7 +107,21 @@ const styles = StyleSheet.create({
     linkText: {
       color: '#007BFF',
       textAlign: 'center',
-      marginTop: 15,
+      marginTop: -15,
+    },
+    orText: {
+      textAlign: 'center',
+      color: '#888',
+      marginVertical: 10,
+    },
+    socialContainer: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      marginVertical: 10,
+    },
+    iconButton: {
+      marginHorizontal: 10,
+      marginBottom: 15,
     },
     darkModeContainer: {
       flexDirection: 'row',
@@ -119,6 +151,7 @@ const styles = StyleSheet.create({
       paddingVertical: 15,
       borderRadius: 8,
       alignItems: 'center',
+      marginTop: 15,
       marginBottom: 15,
     },
     buttonText: {
