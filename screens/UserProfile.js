@@ -2,27 +2,26 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, Switch, Alert, Linking, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const accentColor = '#44ffb1'; // Define your accent color here
-const iconColor = '#44ffb1'; // Define a common icon color
+const accentColor = '#44ffb1';
+const iconColor = '#44ffb1';
 
-const UserProfile = () => {
+const UserProfile = ({ navigation }) => { // Accept navigation prop
   const [isDarkMode, setIsDarkMode] = React.useState(false);
-  const [isSettingsOpen, setIsSettingsOpen] = React.useState(false); // State for settings dropdown
-  const [stars, setStars] = React.useState([]); // State for stars
+  const [isSettingsOpen, setIsSettingsOpen] = React.useState(false);
+  const [stars, setStars] = React.useState([]);
 
   const toggleDarkMode = () => {
     setIsDarkMode(previousState => {
       const newIsDarkMode = !previousState;
       if (newIsDarkMode) {
-        // Generate random positions for multiple stars when dark mode is enabled
-        const { width, height } = Dimensions.get('window'); // Get the screen dimensions
+        const { width, height } = Dimensions.get('window');
         const newStars = Array.from({ length: 100 }, () => ({
-          top: Math.random() * (height - 10), // Adjust height accordingly
-          left: Math.random() * (width - 10), // Adjust width accordingly
+          top: Math.random() * (height - 10),
+          left: Math.random() * (width - 10),
         }));
         setStars(newStars);
       } else {
-        setStars([]); // Clear stars when switching back to light mode
+        setStars([]);
       }
       return newIsDarkMode;
     });
@@ -40,7 +39,11 @@ const UserProfile = () => {
         },
         {
           text: 'Log Out',
-          onPress: () => Alert.alert('Logged Out', 'You have successfully logged out.', [{ text: 'OK' }]),
+          onPress: () => {
+            // Navigate to the Login screen after logging out
+            navigation.navigate('Log In');
+            Alert.alert('Logged Out', 'You have successfully logged out.', [{ text: 'OK' }]);
+          },
           style: 'default',
         },
       ],
@@ -48,14 +51,12 @@ const UserProfile = () => {
     );
   };
 
-  // Function to open links
   const openLink = (url) => {
     Linking.openURL(url).catch(err => console.error("Failed to open link:", err));
   };
 
   return (
     <View style={[styles.container, isDarkMode ? styles.darkContainer : styles.lightContainer]}>
-      {/* Stars Component */}
       {isDarkMode && (
         <View style={styles.starsContainer}>
           {stars.map((star, index) => (
@@ -66,23 +67,20 @@ const UserProfile = () => {
         </View>
       )}
 
-      {/* Cover Photo */}
       <View style={styles.coverPhotoContainer}>
         <Image
           style={styles.coverPhoto}
-          source={require('../assets/cover.jpg')} // Replace with your cover photo image
+          source={require('../assets/cover.jpg')}
         />
       </View>
 
-      {/* Profile Picture */}
       <View style={styles.profilePictureContainer}>
         <Image
           style={styles.avatar}
-          source={require('../assets/profile.jpg')}  // Replace with your profile image
+          source={require('../assets/profile.jpg')}
         />
       </View>
 
-      {/* User Info Section */}
       <View style={styles.profileInfo}>
         <Text style={[styles.name, isDarkMode ? styles.darkText : styles.lightText]}>Ezra Mariñas</Text>
         <Text style={[styles.joined, isDarkMode ? styles.darkText : styles.lightText]}>BSIT-3R10</Text>
@@ -91,7 +89,6 @@ const UserProfile = () => {
         </Text>
       </View>
 
-      {/* External Links Section */}
       <View style={styles.externalLinksSection}>
         <TouchableOpacity style={styles.menuItem} onPress={() => openLink('https://github.com/Ja1c')}>
           <View style={styles.iconContainer}>
@@ -108,7 +105,6 @@ const UserProfile = () => {
         </TouchableOpacity>
       </View>
 
-      {/* Lowered Settings Section */}
       <TouchableOpacity onPress={() => setIsSettingsOpen(!isSettingsOpen)} style={[styles.menuItem, { marginTop: 30 }]}>
         <View style={styles.iconContainer}>
           <Icon name="settings-outline" size={24} color={iconColor} />
@@ -137,8 +133,8 @@ const UserProfile = () => {
               <Icon 
                 name="moon-outline" 
                 size={24} 
-                color={isDarkMode ? '#FFD700' : iconColor} // Change color to yellow (#FFD700) in dark mode
-                style={isDarkMode ? styles.glow : null} // Add glow effect in dark mode
+                color={isDarkMode ? '#FFD700' : iconColor}
+                style={isDarkMode ? styles.glow : null} 
               />
             </View>
             <Text style={[styles.menuText, isDarkMode ? styles.darkText : styles.lightText]}>Dark Mode</Text>
@@ -151,7 +147,6 @@ const UserProfile = () => {
         </View>
       )}
 
-      {/* Sign Out Button */}
       <TouchableOpacity
         style={styles.logoutButton}
         onPress={handleLogout}
@@ -163,13 +158,12 @@ const UserProfile = () => {
   );
 };
 
+
 const styles = StyleSheet.create({
   container: {
-
-    
     flex: 1,
     justifyContent: 'flex-start',
-    alignItems: 'flex-start', // Align to the left
+    alignItems: 'flex-start',
     padding: 20,
   },
   lightContainer: {
@@ -179,33 +173,33 @@ const styles = StyleSheet.create({
     backgroundColor: '#1a1a1a',
   },
   starsContainer: {
-    position: 'absolute', // Position it to cover the background
+    position: 'absolute',
     top: 0,
     left: 0,
-    width: Dimensions.get('window').width, // Full screen width
-    height: Dimensions.get('window').height, // Full screen height
-    pointerEvents: 'none', // Allow touches to pass through
-    zIndex: -1, // Send to the back
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+    pointerEvents: 'none',
+    zIndex: -1,
   },
   star: {
     position: 'absolute',
-    width: 10, // Smaller star width
-    height: 10, // Smaller star height
+    width: 10,
+    height: 10,
     justifyContent: 'center',
     alignItems: 'center',
   },
   starText: {
-    fontSize: 6, // Smaller font size for stars
-    color: '#FFD700', // Gold color for stars
+    fontSize: 6,
+    color: '#FFD700',
   },
   coverPhotoContainer: {
     position: 'relative',
     width: '100%',
-    height: 150, // Height for the cover photo
+    height: 150,
     overflow: 'hidden',
-    borderRadius: 10, // Optional: rounded corners
-    marginTop: 20,
-    marginBottom: -80, // Overlap the profile picture
+    borderRadius: 10,
+    marginTop: -10,
+    marginBottom: -80,
   },
   coverPhoto: {
     width: '100%',
@@ -215,50 +209,50 @@ const styles = StyleSheet.create({
     left: 0,
   },
   profilePictureContainer: {
-    alignItems: 'center', // Center align the profile picture
-    marginBottom: 10, // Space below the profile picture
+    alignItems: 'center',
+    marginBottom: 10,
   },
   avatar: {
-    width: 120, // Increase the width for the avatar
-    height: 120, // Increase the height for the avatar
-    borderRadius: 60, // Keep it half of the width/height for a circular shape
+    width: 120,
+    height: 120,
+    borderRadius: 60,
     borderWidth: 2,
-    borderColor: accentColor, 
+    borderColor: accentColor,
   },
   profileInfo: {
-    alignItems: 'flex-start', // Align user info to the left
-    marginBottom: 20, // Space below user info
+    alignItems: 'flex-start',
+    marginBottom: 20,
   },
   name: {
     fontSize: 24,
     fontWeight: 'bold',
   },
   joined: {
-    fontSize: 18, // Font size for joined section
+    fontSize: 18,
     marginBottom: 5,
   },
   bio: {
-    fontSize: 16, // Font size for bio
+    fontSize: 16,
     marginBottom: 10,
   },
   externalLinksSection: {
-    marginTop: -20, // Space above the external links section
-    width: '100%', // Adjust width to 100%
+    marginTop: -20,
+    width: '100%',
   },
   menuItem: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 10,
-    paddingHorizontal: 0, // No horizontal padding
+    paddingHorizontal: 0,
     width: '100%',
   },
   settingsDropdown: {
-    paddingLeft: 50, // Indent the settings dropdown items
+    paddingLeft: 50,
     width: '100%',
   },
   menuText: {
     fontSize: 20,
-    marginLeft: 10, // Adjusted margin for better alignment
+    marginLeft: 10,
   },
   iconContainer: {
     width: 50,
@@ -268,19 +262,19 @@ const styles = StyleSheet.create({
     marginLeft: 'auto',
   },
   logoutButton: {
-    position: 'absolute', // Position it in the bottom left
+    position: 'absolute',
     left: 20,
     bottom: 20,
     flexDirection: 'row',
     alignItems: 'center',
     padding: 10,
-    backgroundColor: accentColor, // Use accent color for the button background
+    backgroundColor: accentColor,
     borderRadius: 8,
   },
   logoutText: {
     color: '#fff',
-    fontSize: 14, // Smaller font size
-    marginLeft: 5, // Space between icon and text
+    fontSize: 14,
+    marginLeft: 5,
   },
   logoutIcon: {
     marginRight: 5,
