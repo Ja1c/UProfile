@@ -1,11 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, Switch, Alert, Linking, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Pictures from '../components/Pictures';
 
 const accentColor = '#44ffb1';
 const iconColor = '#44ffb1';
 
-const UserProfile = ({ navigation }) => { // Accept navigation prop
+const UserProfile = ({ navigation }) => { 
   const [isDarkMode, setIsDarkMode] = React.useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = React.useState(false);
   const [stars, setStars] = React.useState([]);
@@ -40,7 +41,6 @@ const UserProfile = ({ navigation }) => { // Accept navigation prop
         {
           text: 'Log Out',
           onPress: () => {
-            // Navigate to the Login screen after logging out
             navigation.navigate('Log In');
             Alert.alert('Logged Out', 'You have successfully logged out.', [{ text: 'OK' }]);
           },
