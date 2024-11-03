@@ -1,10 +1,12 @@
-import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Alert, StyleSheet } from 'react-native';
+import EmailInput from '../components/EmailInput';
+import RecoveryButton from '../components/RecoveryButton';
 
 const PasswordRecoveryScreen = ({ navigation }) => {
-  
+  const [email, setEmail] = useState('');
+
   const handleSendRecoveryEmail = () => {
-    // Show an alert for successful email sending
     Alert.alert("Success!", "Sent Successfully", [
       { text: "OK", onPress: () => navigation.goBack() } 
     ]);
@@ -16,10 +18,8 @@ const PasswordRecoveryScreen = ({ navigation }) => {
       <Text style={styles.instructions}>
         Enter your email to receive a password reset link.
       </Text>
-      <TextInput placeholder="Email" style={styles.input} />
-      <TouchableOpacity style={styles.recoveryButton} onPress={handleSendRecoveryEmail}>
-        <Text style={styles.buttonText}>Send Recovery Email</Text>
-      </TouchableOpacity>
+      <EmailInput value={email} onChangeText={setEmail} />
+      <RecoveryButton onPress={handleSendRecoveryEmail} />
       <Text style={styles.linkText} onPress={() => navigation.goBack()}>
         Back to Login
       </Text>
@@ -43,26 +43,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#666',
     marginBottom: 15,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    paddingHorizontal: 15,
-    height: 50,
-    marginBottom: 15,
-    backgroundColor: '#fff',
-  },
-  recoveryButton: {
-    backgroundColor: '#44ffb1',
-    paddingVertical: 15,
-    borderRadius: 8,
-    alignItems: 'center',
-    marginBottom: 15,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 18,
   },
   linkText: {
     color: '#007BFF',

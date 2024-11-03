@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, TextInput, StyleSheet, Image, Switch, TouchableOpacity } from 'react-native';
-// Replace with your icon imports, e.g., from react-native-vector-icons
-import { MaterialIcons } from '@expo/vector-icons';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import DarkModeToggle from '../components/DarkModeToggle';
+import InputFields from '../components/InputFields';
+import SocialLoginButtons from '../components/SocialLoginButtons';
 
 const LoginScreen = ({ navigation }) => {
   const [isDarkMode, setIsDarkMode] = React.useState(false);
@@ -12,25 +13,12 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <View style={[styles.container, isDarkMode ? styles.darkContainer : styles.lightContainer]}>
-      {/* Dark Mode Toggle */}
-      <View style={styles.darkModeContainer}>
-        <Text style={[styles.darkModeText, isDarkMode ? styles.darkText : styles.lightText]}>
-          Dark Mode
-        </Text>
-        <Switch
-          value={isDarkMode}
-          onValueChange={toggleDarkMode}
-          style={styles.switch}
-        />
-      </View>
-
+      <DarkModeToggle isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
       <Image source={require('../assets/logo.png')} style={styles.logo} />
       <Text style={[styles.title, isDarkMode ? styles.glowText : {}]}>Log In</Text>
-      <View style={styles.inputContainer}>
-        <TextInput placeholder="Email" style={styles.input} />
-        <TextInput placeholder="Password" secureTextEntry style={styles.input} />
-      </View>
       
+      <InputFields />
+
       <Text style={styles.linkText} onPress={() => navigation.navigate('Password Recovery')}>
         Forgot Password?
       </Text>
@@ -44,15 +32,7 @@ const LoginScreen = ({ navigation }) => {
 
       <Text style={styles.orText}>Or log in with</Text>
       
-      {/* Social Login Buttons (Icon-Only) */}
-      <View style={styles.socialContainer}>
-        <TouchableOpacity style={styles.iconButton}>
-          <MaterialIcons name="email" size={30} color="#DB4437" />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.iconButton}>
-          <MaterialIcons name="facebook" size={30} color="#4267B2" />
-        </TouchableOpacity>
-      </View>
+      <SocialLoginButtons />
 
       <Text style={styles.linkText} onPress={() => navigation.navigate('Sign Up')}>
         Don't have an account? Sign Up
@@ -60,6 +40,7 @@ const LoginScreen = ({ navigation }) => {
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
     container: {
