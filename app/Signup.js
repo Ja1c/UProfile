@@ -33,7 +33,7 @@ const SignupScreen = ({ navigation }) => {
       {/* Sign Up Button */}
       <TouchableOpacity 
         style={styles.signupButton}
-        onPress={() => navigation.navigate('User Profile')}
+        onPress={() => router.replace('Dashboard')}
       >
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
