@@ -2,6 +2,7 @@
   "expo": {
     "name": "UProfile",
     "slug": "UProfile",
+    "scheme": "com.UProfile.app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -22,6 +23,9 @@
     },
     "web": {
       "favicon": "./assets/logo.png"
-    }
+    },
+    "plugins": [
+      "expo-router"
+    ]
   }
 }
