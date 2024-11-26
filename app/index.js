@@ -22,7 +22,7 @@ const LoginScreen = ({ navigation }) => {
       
       <InputFields />
 
-      <Text style={styles.linkText} onPress={() => navigation.navigate('Password Recovery')}>
+      <Text style={styles.linkText} onPress={() => router.push('PasswordRecovery')}>
         Forgot Password?
       </Text>
 

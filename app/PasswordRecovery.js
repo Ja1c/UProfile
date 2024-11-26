@@ -2,13 +2,16 @@ import React, { useState } from 'react';
 import { View, Text, Alert, StyleSheet } from 'react-native';
 import EmailInput from '../components/EmailInput';
 import RecoveryButton from '../components/RecoveryButton';
+import { useRouter } from 'expo-router';
 
 const PasswordRecoveryScreen = ({ navigation }) => {
+  const router = useRouter(); // Declare router to use expo-router's navigation methods
+
   const [email, setEmail] = useState('');
 
   const handleSendRecoveryEmail = () => {
     Alert.alert("Success!", "Sent Successfully", [
-      { text: "OK", onPress: () => navigation.goBack() } 
+      { text: "OK", onPress: () => router.back() } // Use router.back() for going back
     ]);
   };
 
@@ -20,7 +23,7 @@ const PasswordRecoveryScreen = ({ navigation }) => {
       </Text>
       <EmailInput value={email} onChangeText={setEmail} />
       <RecoveryButton onPress={handleSendRecoveryEmail} />
-      <Text style={styles.linkText} onPress={() => navigation.goBack()}>
+      <Text style={styles.linkText} onPress={() => router.back()}> {/* Use router.back() */}
         Back to Login
       </Text>
     </View>
