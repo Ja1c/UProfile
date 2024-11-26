@@ -12,10 +12,10 @@ const RootLayout = () => {
       screenOptions={{
         headerShown: false
       }}>
-     
               <Stack.Screen name ='index'/>
               <Stack.Screen name = 'Signup'/>
               <Stack.Screen name = 'PasswordRecovery'/>
+              <Stack.Screen name = 'DashboardLayout'/>
       </Stack>
 
     </SafeAreaProvider>

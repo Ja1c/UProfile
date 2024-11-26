@@ -28,7 +28,7 @@ const LoginScreen = ({ navigation }) => {
 
       <TouchableOpacity  
         style={[styles.loginButton]}
-        onPress={() => navigation.navigate('User Profile')} // Navigate to HomeScreen
+        onPress={() => router.replace('Dashboard')} // Navigate to HomeScreen
       >
         <Text style={styles.buttonText}>Log In</Text>
       </TouchableOpacity>
